@@ -166,11 +166,7 @@ function http() {
         })
 
         app.get('/etiqueta/', function(req, res) {
-            db.seleccionar('SELECT Etiqueta.id, Etiqueta.descripcion, GROUP_CONCAT(Producto.descripcion) as producto, Etiqueta.estado FROM Etiqueta LEFT JOIN ProductoEtiqueta ON ProductoEtiqueta.etiqueta_id=Etiqueta.id LEFT JOIN Producto ON Producto.id=ProductoEtiqueta.producto_id GROUP BY id', res);
-        })
-
-        app.get('/etiquet/', function(req, res) {
-            db.seleccionar('SELECT Etiqueta.id,(Select group_concat(Producto_id) from ProductoEtiqueta INNER JOIN Etiqueta ON Etiqueta.id=ProductoEtiqueta.Etiqueta_id GROUP BY ProductoEtiqueta.etiqueta_id) AS Etiquetass, Etiqueta.descripcion, Etiqueta.estado, ProductoEtiqueta.Producto_id FROM Etiqueta WHERE estado=1', res);
+            db.seleccionar('SELECT Etiqueta.id, Etiqueta.descripcion, Etiqueta.estado FROM Etiqueta WHERE Etiqueta.estado = 1', res);
         })
 
         app.get('/etiqueta/:id/', function(req, res){
@@ -233,6 +229,44 @@ function http() {
 
         app.put('/imagen/papelera/:id', function(req, res){
             db.restore(req.params.id, 'Imagen', res);
+        })
+
+        // Etiquetas con Producto
+
+        app.get('/etiqueta-producto/papelera', function(req, res) {
+            db.papelera('SELECT ProductoEtiqueta.id, ProductoEtiqueta.Etiqueta_id, ProductoEtiqueta.Producto_id, Etiqueta.descripcion AS etiqueta, Producto.descripcion AS producto FROM ProductoEtiqueta LEFT JOIN Etiqueta ON Etiqueta.id=ProductoEtiqueta.Etiqueta_id LEFT JOIN Producto ON Producto.id=ProductoEtiqueta.producto_id WHERE ProductoEtiqueta.estado=0', res);
+        })
+
+        app.get('/etiquetaProductoId/', function(req, res) {
+            db.papelera('SELECT ProductoEtiqueta.id FROM ProductoEtiqueta order by id', res);
+        })
+
+        app.get('/etiqueta-producto/', function(req, res) {
+            db.seleccionar('SELECT ProductoEtiqueta.id, ProductoEtiqueta.Etiqueta_id, ProductoEtiqueta.Producto_id, Etiqueta.descripcion AS etiqueta, Producto.descripcion AS producto FROM ProductoEtiqueta LEFT JOIN Etiqueta ON Etiqueta.id=ProductoEtiqueta.Etiqueta_id LEFT JOIN Producto ON Producto.id=ProductoEtiqueta.producto_id WHERE ProductoEtiqueta.estado=1', res);
+        })
+
+        app.get('/etiqueta-producto/:id/', function(req, res){
+            db.seleccionarId(req.params.id, 'SELECT * FROM ProductoEtiqueta WHERE id=? and estado=1', res);
+        })
+
+        app.post('/etiqueta-producto', function(req, res){
+            db.insertar(req.body, 'ProductoEtiqueta', res);
+        })
+
+        app.put('/etiqueta-producto', function(req, res){
+            db.actualizar(req.body, 'ProductoEtiqueta', res);
+        })
+
+        app.delete('/etiqueta-producto/:id', function(req, res){
+            db.delete(req.params.id, 'ProductoEtiqueta', res);
+        })
+
+        app.put('/etiqueta-producto/:id', function(req, res){
+            db.erase(req.params.id, 'ProductoEtiqueta', res);
+        })
+
+        app.put('/etiqueta-producto/papelera/:id', function(req, res){
+            db.restore(req.params.id, 'ProductoEtiqueta', res);
         })
 
         /*// ordenes de compra
