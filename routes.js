@@ -94,7 +94,7 @@ function http() {
         })
 
         app.get('/producto/:id/', function(req, res){
-            db.seleccionarId(req.params.id, 'SELECT Producto.id, Producto.descripcion, Producto.detalle, Producto.precio, Producto.Categoria_id, Categoria.categoria, Producto.estado FROM Producto INNER JOIN Categoria ON Producto.Categoria_id=Categoria.id WHERE Producto.id=? and Producto.estado=1', res);
+            db.seleccionarId(req.params.id, 'SELECT Producto.id, Producto.descripcion, MIN(Imagen.foto) AS imagen, Producto.detalle, Producto.precio, Producto.Categoria_id, Categoria.categoria, Producto.estado FROM Producto INNER JOIN Categoria ON Producto.Categoria_id=Categoria.id LEFT JOIN Imagen ON Producto.id=Imagen.Producto_id WHERE Producto.id=? and Producto.estado=1', res);
         })
 
         app.post('/producto', function(req, res){
@@ -311,12 +311,14 @@ function http() {
 
         // Seleccionar catalogo
 
-        /*app.get('/catalogo/:categoria', function(req, res) {
-            db.selCatalogo('SELECT Producto.id, Producto.descripcion, Producto.precio FROM Producto INNER JOIN Categoria ON Producto.categoria_id=Categoria.id WHERE Producto.estado="1" and Categoria.categoria=?', req.params.categoria, res);
-        })*/
-
         app.get('/catalogo/:categoria', function(req, res) {
             db.selCatalogo('SELECT Producto.id, MIN(Imagen.foto) AS imagen, Producto.descripcion, Producto.precio, Categoria.categoria FROM Producto LEFT JOIN Imagen ON Producto.id=Imagen.Producto_id LEFT JOIN Categoria ON Producto.categoria_id=Categoria.id WHERE Producto.estado=1 AND Categoria.categoria LIKE ? GROUP BY id',req.params.categoria, res);
+        })
+
+        //Infoprod
+
+        app.get('/infoprod/:id', function(req, res) {
+            db.seleccionarId(req.params.id, 'SELECT Imagen.foto, Imagen.id FROM Imagen INNER JOIN Producto ON Imagen.Producto_id=Producto.id WHERE Imagen.estado="1" AND Producto.id=?', res);
         })
     }
 }
