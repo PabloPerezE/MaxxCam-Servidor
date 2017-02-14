@@ -320,6 +320,44 @@ function http() {
         app.get('/infoprod/:id', function(req, res) {
             db.seleccionarId(req.params.id, 'SELECT Imagen.foto, Imagen.id FROM Imagen INNER JOIN Producto ON Imagen.Producto_id=Producto.id WHERE Imagen.estado="1" AND Producto.id=?', res);
         })
+        
+        // Inicio
+
+        app.get('/inicio/papelera', function(req, res) {
+            db.papelera('SELECT Inicio.id, Inicio.nombre, Inicio.foto, Inicio.estado FROM Inicio WHERE Inicio.estado="0"', res);
+        })
+
+        app.get('/inicioId/', function(req, res) {
+            db.papelera('SELECT Inicio.id FROM Inicio order by id', res);
+        })
+
+        app.get('/inicio/', function(req, res) {
+            db.seleccionar('SELECT Inicio.id, Inicio.nombre, Inicio.foto, Inicio.estado FROM Inicio WHERE Inicio.estado="1"', res);
+        })
+
+        app.get('/inicio/:id/', function(req, res){
+            db.seleccionarId(req.params.id, 'SELECT Inicio.id, Inicio.nombre, Inicio.foto, Inicio.estado FROM Inicio WHERE Inicio.id=? and Inicio.estado=1', res);
+        })
+
+        app.post('/inicio', function(req, res){
+            db.insertar(req.body, 'Inicio', res);
+        })
+
+        app.put('/inicio', function(req, res){
+            db.actualizar(req.body, 'Inicio', res);
+        })
+
+        app.delete('/inicio/:id', function(req, res){
+            db.delete(req.params.id, 'Inicio', res);
+        })
+
+        app.put('/inicio/:id', function(req, res){
+            db.erase(req.params.id, 'Inicio', res);
+        })
+
+        app.put('/inicio/papelera/:id', function(req, res){
+            db.restore(req.params.id, 'Inicio', res);
+        })
     }
 }
 
