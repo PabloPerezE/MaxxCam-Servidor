@@ -324,7 +324,7 @@ function http() {
         // Inicio
 
         app.get('/inicio/papelera', function(req, res) {
-            db.papelera('SELECT Inicio.id, Inicio.nombre, Inicio.foto, Inicio.estado FROM Inicio WHERE Inicio.estado="0"', res);
+            db.papelera('SELECT Inicio.id, Inicio.foto, Inicio.estado FROM Inicio WHERE Inicio.estado="0"', res);
         })
 
         app.get('/inicioId/', function(req, res) {
@@ -332,11 +332,11 @@ function http() {
         })
 
         app.get('/inicio/', function(req, res) {
-            db.seleccionar('SELECT Inicio.id, Inicio.nombre, Inicio.foto, Inicio.estado FROM Inicio WHERE Inicio.estado="1"', res);
+            db.seleccionar('SELECT Inicio.id, Inicio.foto, Inicio.estado FROM Inicio WHERE Inicio.estado="1"', res);
         })
 
         app.get('/inicio/:id/', function(req, res){
-            db.seleccionarId(req.params.id, 'SELECT Inicio.id, Inicio.nombre, Inicio.foto, Inicio.estado FROM Inicio WHERE Inicio.id=? and Inicio.estado=1', res);
+            db.seleccionarId(req.params.id, 'SELECT Inicio.id, Inicio.foto, Inicio.estado FROM Inicio WHERE Inicio.id=? and Inicio.estado=1', res);
         })
 
         app.post('/inicio', function(req, res){
