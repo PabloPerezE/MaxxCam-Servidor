@@ -129,9 +129,11 @@ function MetodosDB() {
                 } else {
                     var secret = 'secret';
                     var usuario = {
+                        id: resultado[0].id,
                         correo: resultado[0].correo,
                         nombre: resultado[0].nombre,
                         apellido: resultado[0].apellido,
+                        TipoUsuario_id: resultado[0].TipoUsuario_id
                     };
                     var token = jwt.sign(usuario, secret, {
                         expiresIn: 40000

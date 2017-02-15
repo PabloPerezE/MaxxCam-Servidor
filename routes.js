@@ -269,39 +269,39 @@ function http() {
             db.restore(req.params.id, 'ProductoEtiqueta', res);
         })
 
-        /*// ordenes de compra
+        // ordenes de compra
 
         app.get('/ordenCompra/papelera', function(req, res) {
-            db.papelera('OrdenCompra', res);
+            db.papelera('SELECT CabeceraOrdenCompra.id, CabeceraOrdenCompra.fecha, CabeceraOrdenCompra.Usuario_id, Usuario.id, Usuario.nombre, Usuario.apellido, Usuario.direccion, Usuario.telefono, CabeceraOrdenCompra.estado FROM CabeceraOrdenCompra INNER JOIN Usuario ON CabeceraOrdenCompra.Usuario_id=Usuario.id WHERE CabeceraOrdenCompra.estado="0"', res);
         })
 
         app.get('/ordenCompra/', function(req, res) {
-            db.seleccionar('OrdenCompra', res);
+            db.seleccionar('SELECT CabeceraOrdenCompra.id, CabeceraOrdenCompra.fecha, CabeceraOrdenCompra.Usuario_id, Usuario.id, Usuario.nombre, Usuario.apellido, Usuario.direccion, Usuario.telefono, CabeceraOrdenCompra.estado FROM CabeceraOrdenCompra INNER JOIN Usuario ON CabeceraOrdenCompra.Usuario_id=Usuario.id WHERE CabeceraOrdenCompra.estado="1"', res);
         })
 
         app.get('/ordenCompra/:id/', function(req, res){
-            db.seleccionarId(req.params.id, 'OrdenCompra', res);
+            db.seleccionarId(req.params.id, 'SELECT CabeceraOrdenCompra.id, CabeceraOrdenCompra.fecha, CabeceraOrdenCompra.Usuario_id, Usuario.id, Usuario.nombre, Usuario.apellido, Usuario.direccion, Usuario.telefono, CabeceraOrdenCompra.estado FROM CabeceraOrdenCompra INNER JOIN Usuario ON CabeceraOrdenCompra.Usuario_id=Usuario.id WHERE CabeceraOrdenCompra.id=? AND CabeceraOrdenCompra.estado="1"', res);
         })
 
         app.post('/ordenCompra', function(req, res){
-            db.insertar(req.body, 'OrdenCompra', res);
+            db.insertar(req.body, 'CabeceraOrdenCompra', res);
         })
 
         app.put('/ordenCompra', function(req, res){
-            db.actualizar(req.body, 'OrdenCompra', res);
+            db.actualizar(req.body, 'CabeceraOrdenCompra', res);
         })
 
         app.delete('/ordenCompra/:id', function(req, res){
-            db.delete(req.params.id, 'OrdenCompra', res);
+            db.delete(req.params.id, 'CabeceraOrdenCompra', res);
         })
 
         app.put('/ordenCompra/:id', function(req, res){
-            db.erase(req.params.id, 'OrdenCompra', res);
+            db.erase(req.params.id, 'CabeceraOrdenCompra', res);
         })
 
         app.put('/ordenCompra/papelera/:id', function(req, res){
-            db.restore(req.params.id, 'OrdenCompra', res);
-        })*/
+            db.restore(req.params.id, 'CabeceraOrdenCompra', res);
+        })
 
         // Autentificacion
 
