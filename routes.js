@@ -338,6 +338,10 @@ function http() {
             db.selCatalogo('SELECT Producto.id, MIN(Imagen.foto) AS imagen, Producto.descripcion, Producto.precio, Categoria.categoria FROM Producto LEFT JOIN Imagen ON Producto.id=Imagen.Producto_id LEFT JOIN Categoria ON Producto.categoria_id=Categoria.id WHERE Producto.estado=1 AND Categoria.categoria LIKE ? GROUP BY id',req.params.categoria, res);
         })
 
+        app.get('/tags/:etiqueta', function(req, res) {
+            db.selCatalogo('SELECT Producto.id, MIN(Imagen.foto) AS imagen, Producto.descripcion, Producto.precio FROM Producto LEFT JOIN Imagen ON Producto.id=Imagen.Producto_id LEFT JOIN ProductoEtiqueta ON Producto.id=ProductoEtiqueta.Producto_id WHERE Producto.estado=1 AND ProductoEtiqueta.Etiqueta_id LIKE ? GROUP BY id',req.params.etiqueta, res);
+        })
+
         //Infoprod
 
         app.get('/infoprod/:id', function(req, res) {
@@ -398,11 +402,11 @@ function http() {
       //  let htmlTemplate = ;
 
         app.post('/enviarmail', function(req, res){
-            console.log(req.body.tabla);
+            console.log(req.body);
             let results = req.body.tabla;
 
             let table = results.reduce(function(a, b) {
-  return a + '<tr class="item"><td>' + b.producto + '</td><td>' + b.precio + '</td></tr>';
+  return a + '<tr class="item"><td>' + b.descripcion + '</td><td>' + b.precio + '</td></tr>';
 }, '');
 
             let mailOptions = {

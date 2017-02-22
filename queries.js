@@ -133,7 +133,9 @@ function MetodosDB() {
                         correo: resultado[0].correo,
                         nombre: resultado[0].nombre,
                         apellido: resultado[0].apellido,
-                        TipoUsuario_id: resultado[0].TipoUsuario_id
+                        TipoUsuario_id: resultado[0].TipoUsuario_id,
+                        direccion: resultado[0].direccion,
+                        telefono: resultado[0].telefono,
                     };
                     var token = jwt.sign(usuario, secret, {
                         expiresIn: 40000
